@@ -1,25 +1,9 @@
-<?php
-$result = false;
-
-if (!empty($_POST)) {
-  $sql = 'INSERT INTO post (title, content)
-              VALUES (:title, :content)';
-  $query = $pdo->prepare($sql);
-  $query->execute([
-    'title' => $_POST['title'],
-    'content' => $_POST['content']
-  ]);
-  $result = true;
-}
-?>
-
 <!DOCTYPE html>
 <html lang='es'>
 <head>
   <meta charset="utf-8"/>
   <title>Blog</title>
-  <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
@@ -33,14 +17,14 @@ if (!empty($_POST)) {
       <div class="col-md-8">
         <h2>New Post</h2>
         <p>
-          <a class="btn btn-secondary" href="posts.php">Back</a>
+          <a class="btn btn-secondary" href="<?php echo BASE_URL; ?>admin/posts">Back</a>
         </p>
         <?php
-          if ($result) {
+          if (isset($result) && $result) {
             echo '<div class="alert alert-success">Post Saved</div>';
           }
         ?>
-        <form action="insert-post.php" method="post">
+        <form method="post">
           <div class="form-group">
             <label for="inputTitle">Title</label>
             <input class="form-control" type="text" id="inputTitle" name="title">
@@ -58,15 +42,15 @@ if (!empty($_POST)) {
       <div class="col-md-12">
           <footer>
             This is a footer.<br>
-            <a href="admin/index.php">Admin Panel</a>
+            <a href="<?php echo BASE_URL; ?>admin">Admin Panel</a>
           </footer>
       </div>
     </div>
 
   </div>
   
-  <script type="text/javascript" src="js/jquery-3.2.1.slim.min.js"></script>
-  <script type="text/javascript" src="js/popper.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
