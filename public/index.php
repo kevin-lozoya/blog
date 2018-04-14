@@ -12,17 +12,6 @@ define('BASE_URL', $baseUrl);
 
 $route = $_GET['route'] ?? '/';
 
-function render($fileName, $params = []) {
-  // omite cualquier impresión de texto
-  ob_start();
-  // convierte en variable públicas ($variable) el array asociativo $params
-  extract($params);
-  include_once $fileName;
-
-  // devuelve como texto el texto impreso a partir ob_start()
-  return ob_get_clean();
-}
-
 use Phroute\Phroute\RouteCollector;
 
 $router = new RouteCollector();
