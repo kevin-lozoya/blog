@@ -1,3 +1,19 @@
+<?php
+include_once '../config.php';
+$result = false;
+
+if (!empty($_POST)) {
+  $sql = 'INSERT INTO post (title, content)
+              VALUES (:title, :content)';
+  $query = $pdo->prepare($sql);
+  $query->execute([
+    'title' => $_POST['title'],
+    'content' => $_POST['content']
+  ]);
+  $result = true;
+}
+?>
+
 <!DOCTYPE html>
 <html lang='es'>
 <head>
@@ -17,13 +33,20 @@
     <div class="row">
       <div class="col-md-8">
         <h2>New Post</h2>
-        <a class="btn btn-secondary" href="posts.php">Back</a>
+        <p>
+          <a class="btn btn-secondary" href="posts.php">Back</a>
+        </p>
+        <?php
+          if ($result) {
+            echo '<div class="alert alert-success">Post Saved</div>';
+          }
+        ?>
         <form action="insert-post.php" method="post">
           <div class="form-group">
             <label for="inputTitle">Title</label>
-            <input class="form-control" type="text" id="title" name="inputTitle">
+            <input class="form-control" type="text" id="inputTitle" name="title">
           </div>
-          <textarea class="form-control" name="content" id="inputContent" rows="5"></textarea>
+          <textarea class="form-control" id="inputContent" name="content" rows="5"></textarea>
           <br>
           <input class="btn btn-primary" type="submit" value="Save">
         </form>
