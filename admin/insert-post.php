@@ -1,19 +1,10 @@
-<?php
-include_once 'config.php';
-
-$query = $pdo->prepare('SELECT * FROM post ORDER BY id DESC');
-$query->execute();
-
-$blogPosts = $query->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang='es'>
 <head>
   <meta charset="utf-8"/>
   <title>Blog</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/font-awesome.min.css">
 </head>
 <body>
 
@@ -25,20 +16,17 @@ $blogPosts = $query->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <div class="row">
       <div class="col-md-8">
-        <?php
-          foreach ($blogPosts as $post) {
-            echo '<div class="blog-post">';
-            echo "<h2>{$post['title']}</h2>";
-            echo '<p>Jan 1, 2020 by <a href="#">Alex</a></p>
-                    <div class="blog-post-image">
-                      <img src="images/image1.jpg" alt="">
-                    </div>
-                    <div class="blog-post-content">';
-            echo $post['content'];
-            echo '</div>
-                  </div>';
-          }    
-        ?>
+        <h2>New Post</h2>
+        <a class="btn btn-secondary" href="posts.php">Back</a>
+        <form action="insert-post.php" method="post">
+          <div class="form-group">
+            <label for="inputTitle">Title</label>
+            <input class="form-control" type="text" id="title" name="inputTitle">
+          </div>
+          <textarea class="form-control" name="content" id="inputContent" rows="5"></textarea>
+          <br>
+          <input class="btn btn-primary" type="submit" value="Save">
+        </form>
       </div>
       <div class="col-md-4">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum animi porro laudantium! Architecto adipisci laboriosam, maiores eveniet quidem praesentium inventore temporibus aliquid reprehenderit esse unde minima voluptates, ullam, ratione optio.

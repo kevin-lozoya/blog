@@ -1,5 +1,5 @@
 <?php
-include_once 'config.php';
+include_once '../config.php';
 
 $query = $pdo->prepare('SELECT * FROM post ORDER BY id DESC');
 $query->execute();
@@ -12,8 +12,8 @@ $blogPosts = $query->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="utf-8"/>
   <title>Blog</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/font-awesome.min.css">
 </head>
 <body>
 
@@ -25,20 +25,24 @@ $blogPosts = $query->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <div class="row">
       <div class="col-md-8">
-        <?php
-          foreach ($blogPosts as $post) {
-            echo '<div class="blog-post">';
-            echo "<h2>{$post['title']}</h2>";
-            echo '<p>Jan 1, 2020 by <a href="#">Alex</a></p>
-                    <div class="blog-post-image">
-                      <img src="images/image1.jpg" alt="">
-                    </div>
-                    <div class="blog-post-content">';
-            echo $post['content'];
-            echo '</div>
-                  </div>';
-          }    
-        ?>
+        <h2>Posts</h2>
+        <a class="btn btn-primary" href="insert-post.php">New Post</a>
+        <table class="table">
+            <tr>  
+              <th>Title</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          <?php
+            foreach ($blogPosts as $post) {
+            echo "<tr>
+              <td>{$post['title']}</td>
+              <td>Edit</td>
+              <td>Delete</td>
+            </tr>";
+            }
+          ?>
+        </table>
       </div>
       <div class="col-md-4">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum animi porro laudantium! Architecto adipisci laboriosam, maiores eveniet quidem praesentium inventore temporibus aliquid reprehenderit esse unde minima voluptates, ullam, ratione optio.
