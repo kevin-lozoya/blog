@@ -37,7 +37,6 @@ class PostController extends BaseController {
     }
     else {
       $errors = $validator->getMessages();
-      var_dump($errors);
     }
 
     
