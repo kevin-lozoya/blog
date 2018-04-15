@@ -1,7 +1,11 @@
 <?php
 namespace App\Controllers\Admin;
 
-class PostController extends \App\Controllers\BaseController {
+use App\Controllers\BaseController;
+use App\Models\BlogPost;
+use Sirius\Validation\Validator;
+
+class PostController extends BaseController {
   
   public function getIndex() {
     // admin/posts or admin/posts/index
@@ -17,14 +21,31 @@ class PostController extends \App\Controllers\BaseController {
   }
 
   public function postCreate() {
-    $blogPost = new \App\Models\BlogPost([
-      'title' => $_POST['title'],
-      'content' => $_POST['content']
-    ]);
-    $blogPost->save();
-    $result = true;
+    $errors = [];
+    $result = false;
+    $validator = new Validator();
+    $validator->add('title', 'required');
+    $validator->add('content', 'required');
 
-    return $this->render('admin/insert-post.twig', ['result' => $result]);
+    if ($validator->validate($_POST)) {
+      $blogPost = new BlogPost([
+        'title' => $_POST['title'],
+        'content' => $_POST['content']
+      ]);
+      $blogPost->save();
+      $result = true;
+    }
+    else {
+      $errors = $validator->getMessages();
+      var_dump($errors);
+    }
+
+    
+
+    return $this->render('admin/insert-post.twig', [
+      'result' => $result,
+      'errors' => $errors
+    ]);
   }
 
 }
