@@ -19,14 +19,14 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 $capsule = new Capsule;
 
 $capsule->addConnection([
-    'driver'    => 'mysql',
-    'host'      => getenv('DB_HOST'),
-    'database'  => getenv('DB_NAME'),
-    'username'  => getenv('DB_USER'),
-    'password'  => getenv('DB_PASS'),
-    'charset'   => 'utf8',
-    'collation' => 'utf8_unicode_ci',
-    'prefix'    => '',
+	'driver'    => 'mysql',
+	'host'      => getenv('DB_HOST'),
+	'database'  => getenv('DB_NAME'),
+	'username'  => getenv('DB_USER'),
+	'password'  => getenv('DB_PASS'),
+	'charset'   => 'utf8',
+	'collation' => 'utf8_unicode_ci',
+	'prefix'    => '',
 ]);
 
 $capsule->setAsGlobal();
@@ -38,10 +38,21 @@ use Phroute\Phroute\RouteCollector;
 
 $router = new RouteCollector();
 
+$router->filter('auth', function () {
+	if (!isset($_SESSION['userId'])) {
+		header('Location: '.BASE_URL.'auth/login');
+		return false;
+	}
+});
+
 $router->controller('/', App\Controllers\IndexController::class);
-$router->controller('/admin', App\Controllers\Admin\IndexController::class);
-$router->controller('/admin/posts', \App\Controllers\Admin\PostController::class);
-$router->controller('/admin/users', \App\Controllers\Admin\UserController::class);
+
+$router->group(['before' => 'auth'], function ($router) {
+	$router->controller('/admin', App\Controllers\Admin\IndexController::class);
+	$router->controller('/admin/posts', \App\Controllers\Admin\PostController::class);
+	$router->controller('/admin/users', \App\Controllers\Admin\UserController::class);
+});
+
 $router->controller('/auth', \App\Controllers\AuthController::class);
 
 
