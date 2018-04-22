@@ -10,7 +10,7 @@ class PostController extends BaseController {
   public function getIndex() {
     // admin/posts or admin/posts/index
 
-    $blogPosts = \App\Models\BlogPost::all();
+    $blogPosts = BlogPost::all();
 
     return $this->render('admin/posts.twig', ['blogPosts' => $blogPosts]);
   }
