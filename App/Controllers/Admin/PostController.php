@@ -2,7 +2,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\BlogPost;
+use App\Models\Post;
 use Sirius\Validation\Validator;
 
 class PostController extends BaseController {
@@ -10,7 +10,7 @@ class PostController extends BaseController {
   public function getIndex() {
     // admin/posts or admin/posts/index
 
-    $blogPosts = BlogPost::all();
+    $blogPosts = Post::all();
 
     return $this->render('admin/posts.twig', ['blogPosts' => $blogPosts]);
   }
@@ -28,7 +28,7 @@ class PostController extends BaseController {
     $validator->add('content', 'required');
 
     if ($validator->validate($_POST)) {
-      $blogPost = new BlogPost([
+      $blogPost = new Post([
         'title' => $_POST['title'],
         'content' => $_POST['content']
       ]);

@@ -2,3 +2,5 @@ config.php
 images/*
 .env
 logs/*
+.vscode/
+vendor/

@@ -1,14 +1,15 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\BlogPost;
+use App\Models\Post;
+use App\Controllers\BaseController;
 
 class IndexController extends BaseController {
   
   public function getIndex() {
-    $blogPosts = BlogPost::query()->orderBy('id', 'desc')->get();
+    $posts = Post::query()->orderBy('id', 'desc')->get();
     
-    return $this->render('index.twig', ['blogPosts' => $blogPosts]);
+    return $this->render('index.twig', ['posts' => $posts]);
   }
 
 }

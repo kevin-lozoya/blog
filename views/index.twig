@@ -1,17 +1,19 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-  {% for blogPost in blogPosts %}
+  {% for post in posts %}
     <div class="blog-post">
-      <h2>{{ blogPost.title }}</h2>
+      <a href="{{ 'post' | url }}/{{post.id}}/{{ post.title | replace({' ': '-'}) }}">
+        <h2>{{ post.title }}</h2>
+      </a>
       <p>Jan 1, 2020 by <a href="#">Alex</a></p>
-      {% if blogPost.img_url %}
+      {% if post.img_url %}
       <div class="blog-post-image">
-        <img class="img-fluid" src="{{ blogPost.img_url }}" alt="">
+        <img class="img-fluid" src="{{ post.img_url }}" alt="">
       </div>
       {% endif %}
       <div class="blog-post-content">
-        {{ blogPost.content }}
+        {{ post.content }}
       </div>
     </div>  
   {% endfor %}
